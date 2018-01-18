@@ -1,0 +1,12 @@
+{
+  "name":"mdenggre/328/dating",
+  "authors": [
+    {
+      "name": "Mingjie Deng",
+      "email": "mdeng@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
