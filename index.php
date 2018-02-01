@@ -7,12 +7,12 @@
     @version    1.1(1/31/2018)
 */
 
-    //session_start();
     error_reporting(E_ALL);
     ini_set("display_errors",TRUE);
 
     //Require the autoload file
     require_once('vendor/autoload.php');
+    session_start();
 
     //Create an instance of the Base class
     $f3 = Base::instance();
@@ -44,6 +44,34 @@
 
     $f3->route('GET|POST /signUp/personalInfo', function ($f3)
     {
+        if(isset($_POST['submit']))
+        {
+            //save the user input to the variables
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $age = $_POST['age'];
+            $gender = $_POST['gender'];
+            $phone = $_POST['phone'];
+
+            include('model/validPersonal.php');
+
+            $f3->set('fname', $fname);
+            $f3->set('lname', $lname);
+            $f3->set('age', $age);
+            $f3->set('gender', $gender);
+            $f3->set('phone', $phone);
+            $f3->set('errors', $errors);
+
+            $_SESSION['fname']=$fname;
+            $_SESSION['lname']=$lname;
+            $_SESSION['age']=$age;
+            $_SESSION['gender']=$gender;
+            $_SESSION['phone']=$phone;
+
+            if ($success) {
+                $f3->reroute('/signUp/profile');
+            }
+        }
         echo Template::instance() -> render('views/personalInfo.html');
     });
 

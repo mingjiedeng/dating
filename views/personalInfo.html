@@ -24,19 +24,21 @@
                     </div>
                 </div>
 
-                <form method="post" action="profile">
+                <form method="post" action="">
 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="form-row mb-3">
+                        <div class="mb-3">
+                            <check if="{{@errors['name']}}"><span class="text-danger">{{@errors['name']}}</span><br></check>
                             <label for="fname"><strong>First Name</strong></label>
                             <input type="text" class="form-control" id="fname" name="fname" value="{{ @fname }}" placeholder="First Name">
                         </div>
-                        <div class="form-row mb-3">
+                        <div class="mb-3">
                             <label for="lname"><strong>Last Name</strong></label>
                             <input type="text" class="form-control" id="lname" name="lname" value="{{ @lname }}" placeholder="Last Name">
                         </div>
-                        <div class="form-row mb-3">
+                        <div class="mb-3">
+                            <check if="{{@errors['age']}}"><span class="text-danger">{{@errors['age']}}</span><br></check>
                             <label for="age"><strong>Age</strong></label>
                             <input type="text" class="form-control" id="age" name="age" value="{{ @age }}" placeholder="Age">
                         </div>
@@ -44,15 +46,16 @@
                             <label><strong>Gender</strong></label>
                             <div>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="male" value="male"> Male
+                                    <input type="radio" name="gender" id="male" value="male" <check if="{{ @gender == 'male' }}"> checked</check>> Male
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="female" value="female"> Female
+                                    <input type="radio" name="gender" id="female" value="female" <check if="{{ @gender == 'female' }}"> checked</check>> Female
                                 </label>
                             </div>
                         </div>
-                        <div class="form-row mb-3">
-                            <label for="age"><strong>Phone Number</strong></label>
+                        <div class="mb-3">
+                            <check if="{{@errors['phone']}}"><span class="text-danger">{{@errors['phone']}}</span><br></check>
+                            <label for="phone"><strong>Phone Number</strong></label>
                             <input type="text" class="form-control" id="phone" name="phone" value="{{ @phone }}" placeholder="Phone Number">
                         </div>
                     </div>
@@ -67,7 +70,7 @@
                 </div>
                     <div class="row">
                         <div class="col text-right">
-                            <input class="btn btn-primary" type="submit" value="Next>">
+                            <input class="btn btn-primary" type="submit" name="submit" value="Next>">
                         </div>
                     </div>
                 </form>
