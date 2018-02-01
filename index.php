@@ -62,11 +62,10 @@
             $f3->set('phone', $phone);
             $f3->set('errors', $errors);
 
-            $_SESSION['fname']=$fname;
-            $_SESSION['lname']=$lname;
-            $_SESSION['age']=$age;
-            $_SESSION['gender']=$gender;
-            $_SESSION['phone']=$phone;
+            $_SESSION['name'] = "$fname $lname";
+            $_SESSION['age'] = $age;
+            $_SESSION['gender'] = $gender;
+            $_SESSION['phone'] = $phone;
 
             if ($success) {
                 $f3->reroute('/signUp/profile');
@@ -77,16 +76,70 @@
 
     $f3->route('GET|POST /signUp/profile', function ($f3)
     {
+        if(isset($_POST['submit']))
+        {
+            //save the user input to the variables
+            $email = $_POST['email'];
+            $state = $_POST['state'];
+            $seeking = $_POST['seeking'];
+            $biography = $_POST['biography'];
+
+            include('model/validProfile.php');
+
+            $f3->set('email', $email);
+            $f3->set('state', $state);
+            $f3->set('seeking', $seeking);
+            $f3->set('biography', $biography);
+
+            $_SESSION['email'] = $email;
+            $_SESSION['state'] = $state;
+            $_SESSION['seeking'] = $seeking;
+            $_SESSION['biography'] = $biography;
+
+            if ($success) {
+                $f3->reroute('/signUp/interests');
+            }
+        }
         echo Template::instance() -> render('views/profile.html');
     });
 
     $f3->route('GET|POST /signUp/interests', function ($f3)
     {
+        if(isset($_POST['submit']))
+        {
+            //save the user input to the variables
+            $indoorInterests = $_POST['indoorInterests'];
+            $outdoorInterests = $_POST['outdoorInterests'];
+
+            include('model/validInterest.php');
+
+            $f3->set('indoorInterests', $indoorInterests);
+            $f3->set('outdoorInterests', $outdoorInterests);
+            $f3->set('errors', $errors);
+
+            $_SESSION['indoorInterests'] = $indoorInterests;
+            $_SESSION['outdoorInterests'] = $outdoorInterests;
+
+            if ($success) {
+                $f3->reroute('/signUp/summary');
+            }
+        }
         echo Template::instance() -> render('views/interests.html');
     });
 
     $f3->route('GET|POST /signUp/summary', function ($f3)
     {
+        $f3->set('name', $f3->get('SESSION.name'));
+        $f3->set('age', $f3->get('SESSION.age'));
+        $f3->set('gender', $f3->get('SESSION.gender'));
+        $f3->set('phone', $f3->get('SESSION.phone'));
+        $f3->set('email', $f3->get('SESSION.email'));
+        $f3->set('state', $f3->get('SESSION.state'));
+        $f3->set('seeking', $f3->get('SESSION.seeking'));
+        $f3->set('biography', $f3->get('SESSION.biography'));
+        $f3->set('indoorInterests', $f3->get('SESSION.indoorInterests'));
+        $f3->set('outdoorInterests', $f3->get('SESSION.outdoorInterests'));
+
         echo Template::instance() -> render('views/summary.html');
     });
 

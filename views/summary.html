@@ -22,22 +22,25 @@
                 <div class="row">
                     <div class="col-md-6">
                         <ul class="list-unstyled border rounded">
-                            <li class="border p-2">Name: {{ @fname }} {{ @lname }}</li>
+                            <li class="border p-2">Name: {{ @name }}</li>
                             <li class="border p-2">Gender: {{ @gender }}</li>
                             <li class="border p-2">Age: {{ @age }}</li>
                             <li class="border p-2">Phone: {{ @phone }}</li>
                             <li class="border p-2">Email: {{ @email }}</li>
                             <li class="border p-2">State: {{ @state }}</li>
                             <li class="border p-2">Seeking: {{ @seeking }}</li>
-                            <li class="border p-2">Interests: {{ @interests }}</li>
+                            <li class="border p-2">Interests:
+                                <repeat group="{{ @indoorInterests }}" value="{{ @interest }}">{{ @interest }} </repeat>
+                                <repeat group="{{ @outdoorInterests }}" value="{{ @interest }}">{{ @interest }} </repeat>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <div class="row ml-2">
-                            <img src="/images/splash.jpg" class="rounded img-fluid" alt="dating">
+                        <div class="row ml-2 mb-2">
+                            <img src="../images/photo.jpeg" class="rounded img-fluid" alt="dating">
                         </div>
                         <div class="row">
-                            <h4>Biography</h4>
+                            <h5>Biography</h5>
                         </div>
                         <div class="row">
                             <p>{{ @biography }}</p>
@@ -46,7 +49,7 @@
                 </div>
                 <div class="row m-2">
                     <div class="col text-center">
-                        <input class="btn btn-primary" type="submit" value="Contact Me!>">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Contact Me!>">
                     </div>
                 </div>
             </form>

@@ -24,7 +24,9 @@
                 </div>
             </div>
 
-            <form method="post" action="summary">
+            <form method="post" action="">
+
+                <check if="{{@errors['indoor']}}"><span class="text-danger">{{@errors['indoor']}}</span><br></check>
 
                 <div class="row px-3">
                     <label><strong>In-door Interests</strong></label>
@@ -34,11 +36,13 @@
                     <div class="col-md-3">
 
                             <label class="checkbox">
-                            <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}">{{ @interest }}
+                            <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"> {{ @interest }}
                             </label>
                     </div>
                     </repeat>
                 </div>
+
+                <check if="{{@errors['outdoor']}}"><span class="text-danger">{{@errors['outdoor']}}</span><br></check>
 
                 <div class="row px-3">
                     <label><strong>Out-door Interests</strong></label>
@@ -48,7 +52,7 @@
                         <div class="col-md-3">
 
                             <label class="checkbox">
-                                <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}">{{ @interest }}
+                                <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"> {{ @interest }}
                             </label>
                         </div>
                     </repeat>
@@ -56,7 +60,7 @@
 
                 <div class="row">
                     <div class="col text-right">
-                        <input class="btn btn-primary" type="submit" value="Next>">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Next>">
                     </div>
                 </div>
             </form>

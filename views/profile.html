@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <form method="post" action="interests">
+            <form method="post" action="">
 
                 <div class="row">
                     <div class="col-md-6">
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-row mb-3">
                             <label><strong>State</strong></label>
-                            <select class="form-control">
+                            <select class="form-control" name="state">
                                 <option value="">-- Select --</option>
                                 <repeat group="{{@states}}" value="{{@stateOption}}">
                                     <option value="{{@stateOption}}"
@@ -48,10 +48,10 @@
                             <label><strong>Seeking</strong></label>
                             <div>
                                 <label class="radio-inline">
-                                    <input type="radio" name="seeking" id="male" value="male"> Male
+                                    <input type="radio" name="seeking" id="male" value="male" <check if="{{ @seeking == 'male' }}"> checked</check>> Male
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="seeking" id="female" value="female"> Female
+                                    <input type="radio" name="seeking" id="female" value="female" <check if="{{ @seeking == 'female' }}"> checked</check>> Female
                                 </label>
                             </div>
                         </div>
@@ -59,13 +59,13 @@
                     <div class="col-md-6">
                         <div class="form-row ml-3">
                             <label for="biography"><strong>Biography</strong></label>
-                            <textarea class="form-control" id="biography" name="biography" rows="6"></textarea>
+                            <textarea class="form-control" id="biography" name="biography" rows="6">{{ @biography }}</textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col text-right">
-                        <input class="btn btn-primary" type="submit" value="Next>">
+                        <input class="btn btn-primary" type="submit" name="submit" value="Next>">
                     </div>
                 </div>
             </form>
