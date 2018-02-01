@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Profile</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light mb-3">
+    <a class="navbar-brand" href="/">My Dating Website</a>
+</nav>
+
+<div class="container">
+    <div class="row border rounded p-3">
+        <div class="col">
+
+            <form method="post" action="">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled border rounded">
+                            <li class="border p-2">Name: {{ @fname }} {{ @lname }}</li>
+                            <li class="border p-2">Gender: {{ @gender }}</li>
+                            <li class="border p-2">Age: {{ @age }}</li>
+                            <li class="border p-2">Phone: {{ @phone }}</li>
+                            <li class="border p-2">Email: {{ @email }}</li>
+                            <li class="border p-2">State: {{ @state }}</li>
+                            <li class="border p-2">Seeking: {{ @seeking }}</li>
+                            <li class="border p-2">Interests: {{ @interests }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row ml-2">
+                            <img src="/images/splash.jpg" class="rounded img-fluid" alt="dating">
+                        </div>
+                        <div class="row">
+                            <h4>Biography</h4>
+                        </div>
+                        <div class="row">
+                            <p>{{ @biography }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col text-center">
+                        <input class="btn btn-primary" type="submit" value="Contact Me!>">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</body>
+</html>

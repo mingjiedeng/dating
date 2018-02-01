@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>Profile</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light mb-3">
+    <a class="navbar-brand" href="/">My Dating Website</a>
+</nav>
+
+<div class="container">
+    <div class="row border rounded p-3">
+        <div class="col">
+
+            <div class="row">
+                <div class="col">
+                    <h3>Profile</h3>
+                    <hr>
+                </div>
+            </div>
+
+            <form method="post" action="interests">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-row mb-3">
+                            <label for="email"><strong>Email</strong></label>
+                            <input type="text" class="form-control" id="email" name="email" value="{{ @email }}" placeholder="Email">
+                        </div>
+                        <div class="form-row mb-3">
+                            <label><strong>State</strong></label>
+                            <select class="form-control">
+                                <option value="">-- Select --</option>
+                                <repeat group="{{@states}}" value="{{@stateOption}}">
+                                    <option value="{{@stateOption}}"
+                                    <check if="{{@stateOption == @state}}"> selected</check>>
+                                    {{@stateOption}}
+                                    </option>
+                                </repeat>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label><strong>Seeking</strong></label>
+                            <div>
+                                <label class="radio-inline">
+                                    <input type="radio" name="seeking" id="male" value="male"> Male
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="seeking" id="female" value="female"> Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-row ml-3">
+                            <label for="biography"><strong>Biography</strong></label>
+                            <textarea class="form-control" id="biography" name="biography" rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-right">
+                        <input class="btn btn-primary" type="submit" value="Next>">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</body>
+</html>
