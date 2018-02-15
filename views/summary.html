@@ -28,11 +28,13 @@
                             <li class="border p-2">Phone: {{ @phone }}</li>
                             <li class="border p-2">Email: {{ @email }}</li>
                             <li class="border p-2">State: {{ @state }}</li>
-                            <li class="border p-2">Seeking: {{ @seeking }}</li>
+                            <li class="border p-2">Seeking: {{ @seeking }}
+                            <check if="{{ @premium == 'true' }}">
                             <li class="border p-2">Interests:
                                 <repeat group="{{ @indoorInterests }}" value="{{ @interest }}">{{ @interest }} </repeat>
                                 <repeat group="{{ @outdoorInterests }}" value="{{ @interest }}">{{ @interest }} </repeat>
                             </li>
+                            </check>
                         </ul>
                     </div>
                     <div class="col-md-6 px-5">
