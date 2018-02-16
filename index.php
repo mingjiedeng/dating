@@ -115,9 +115,6 @@
 
         if(isset($_POST['submit']))
         {
-            print_r($_FILES); echo "<br>";
-            print_r($_POST); echo "<br>";
-            print_r($_SESSION);echo "<br>";
             //save the user input to the variables
             $myIndoorInterests = empty($_POST['indoorInterests']) ? array() : $_POST['indoorInterests'];
             $myOutdoorInterests = empty($_POST['outdoorInterests']) ? array() : $_POST['outdoorInterests'];
@@ -132,10 +129,9 @@
 
             $f3->set('member', $member);
             $f3->set('errors', $errors);
-            print_r($member->getIndoorInterests()); echo "<br>";
 
             if ($success) {
-                //$f3->reroute('/signUp/summary');
+                $f3->reroute('/signUp/summary');
             }
         }
         echo Template::instance() -> render('views/interests.html');
