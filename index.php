@@ -12,6 +12,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
+
+    //session_start() must after requiring autoload.php
     session_start();
 
     //Create an instance of the Base class
@@ -55,18 +57,20 @@
 
             include('model/validPersonal.php');
 
-            $f3->set('lname', $lname);
-            $f3->set('age', $age);
-            $f3->set('gender', $gender);
-            $f3->set('phone', $phone);
-            $f3->set('premium', $premium);
-            $f3->set('errors', $errors);
+//            $f3->set('lname', $lname);
+//            $f3->set('age', $age);
+//            $f3->set('gender', $gender);
+//            $f3->set('phone', $phone);
+//            $f3->set('premium', $premium);
+//            $f3->set('errors', $errors);
 
             if ($premium == "true") {
                 $member = new PremiumMember($fname, $lname, $age, $gender, $phone);
             } else {
                 $member = new Member($fname, $lname, $age, $gender, $phone);
             }
+
+            $f3->set('member', $member);
 
             $_SESSION['member'] = $member;
 
@@ -126,8 +130,8 @@
 
             include('model/validInterest.php');
 
-            $f3->set('indoorInterests', $indoorInterests);
-            $f3->set('outdoorInterests', $outdoorInterests);
+            $f3->set('myIndoorInterests', $indoorInterests);
+            $f3->set('myOutdoorInterests', $outdoorInterests);
             $f3->set('errors', $errors);
 
             $member = $_SESSION['member'];
@@ -145,6 +149,7 @@
     $f3->route('GET|POST /signUp/summary', function ($f3)
     {
         $member = $_SESSION['member'];
+        $f3->set('member', $member);
         $name = $member->getFname() . " " . $member->getLname();
         $f3->set('name', $name);
         $f3->set('age', $member->getAge());

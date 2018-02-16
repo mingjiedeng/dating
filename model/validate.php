@@ -70,4 +70,17 @@ function validIndoor($interests)
     return true;
 }
 
+/**
+ * @param $uploadFile
+ * @return bool
+ */
+function validImg($uploadFile)
+{
+    return ($uploadFile["error"] == 0 &&
+            ($uploadFile["type"] == "image/gif" ||
+                $uploadFile["type"] == "image/jpeg" ||
+                $uploadFile["type"] == "image/png") &&
+            $uploadFile["size"] < 10000
+    );
+}
 

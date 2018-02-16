@@ -6,6 +6,11 @@
  * Time: 22:05
  */
 
+/**
+ * Class PremiumMember
+ *
+ * This class represents a premium member in the dating website.
+ */
 class PremiumMember extends Member
 {
     private $_inDoorInterests;
@@ -50,6 +55,4 @@ class PremiumMember extends Member
     {
         $this->_outDoorInterests = $outDoorInterests;
     }
-
-
 }

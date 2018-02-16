@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <form method="post" action="#">
+            <form method="post" action="#" enctype="multipart/form-data">
 
                 <check if="{{@errors['indoor']}}"><span class="text-danger">{{@errors['indoor']}}</span><br></check>
 
@@ -36,7 +36,9 @@
                     <div class="col-md-3">
 
                             <label class="checkbox">
-                            <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"> {{ @interest }}
+                            <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"
+                                <check if="{{ in_array(@interest, @@SESSION['member']->getIndoorInterests()}}"> selected</check>
+                            > {{ @interest }}
                             </label>
                     </div>
                     </repeat>
@@ -52,10 +54,19 @@
                         <div class="col-md-3">
 
                             <label class="checkbox">
-                                <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"> {{ @interest }}
+                                <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"
+                                    <check if="{{ in_array(@interest, @@SESSION['member']->getOutdoorInterests()}}"> selected</check>
+                                > {{ @interest }}
                             </label>
                         </div>
                     </repeat>
+                </div>
+
+                <check if="{{@errors['upload']}}"><span class="text-danger">{{@errors['upload']}}</span><br></check>
+
+                <div class="row px-3 mb-2">
+                    <label><strong>Select image to upload</strong></label>
+                    <input type="file" name="fileToUpload">
                 </div>
 
                 <div class="row">

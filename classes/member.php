@@ -6,6 +6,11 @@
  * Time: 21:48
  */
 
+/**
+ * Class Member
+ *
+ * This class represents a member in the dating website
+ */
 class Member
 {
     protected $fname;
@@ -18,6 +23,15 @@ class Member
     protected $seeking;
     protected $bio;
 
+    /**
+     * Member constructor.
+     *
+     * @param $fname first name
+     * @param $lname last name
+     * @param $age   age by integer
+     * @param $gender gender
+     * @param $phone phone
+     */
     function __construct($fname, $lname, $age, $gender, $phone)
     {
         $this->fname = $fname;
@@ -28,7 +42,7 @@ class Member
     }
 
     /**
-     * @return String
+     * @return String first name
      */
     public function getFname()
     {

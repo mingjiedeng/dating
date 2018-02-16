@@ -18,5 +18,42 @@ if (!validOutdoor($outdoorInterests)) {
     $errors['outdoor'] = "Please select the valid interests.";
 }
 
+/*
+if (!validImg($_FILES['fileToUpload'])) {
+    $errors['upload'] = "Photo upload failed or file type invalid.";
+} else {
+
+}
+
+$target_dir = "images/";
+$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    $errors['upload'] = $errors['upload'] . "Sorry, only JPG, JPEG, PNG & GIF files are allowed. ";
+}
+
+// Check if image file is a actual image or fake image
+if(!getimagesize($_FILES["fileToUpload"]["tmp_name"])) {
+    $errors['upload'] = $errors['upload'] . "File is not an image. ";
+}
+
+// Check if file already exists
+if (file_exists($target_file)) {
+    $errors['upload'] = $errors['upload'] . "Sorry, file already exists. ";
+}
+// Check file size
+if ($_FILES["fileToUpload"]["size"] > 500000) {
+    $errors['upload'] = $errors['upload'] . "Sorry, your file is too large. ";
+}
+
+// Check if $uploadOk is set to 0 by an error
+if (isset($errors['upload'])) {
+    if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        $errors['upload'] = "Sorry, there was an error uploading your file.";
+    }
+}
+*/
+
 //$success = true;
 $success = sizeof($errors) == 0;
