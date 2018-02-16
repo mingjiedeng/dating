@@ -34,10 +34,9 @@
                 <div class="row px-3 mb-2">
                     <repeat group="{{ @indoorInterests }}" value="{{ @interest }}">
                     <div class="col-md-3">
-
                             <label class="checkbox">
                             <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"
-                                <check if="{{ @member && in_array(@interest, @member->getIndoorInterests())}}"> selected</check>
+                                <check if="{{ @member && in_array(@interest, @member->getIndoorInterests())}}"> checked</check>
                                 > {{ @interest }}
                             </label>
                     </div>
@@ -55,7 +54,7 @@
 
                             <label class="checkbox">
                                 <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"
-                                    <check if="{{ @member && in_array(@interest, @member->getOutdoorInterests())}}"> selected</check>
+                                    <check if="{{ @member && in_array(@interest, @member->getOutdoorInterests())}}"> checked</check>
                                 > {{ @interest }}
                             </label>
                         </div>
