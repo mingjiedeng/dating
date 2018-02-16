@@ -57,13 +57,6 @@
 
             include('model/validPersonal.php');
 
-//            $f3->set('lname', $lname);
-//            $f3->set('age', $age);
-//            $f3->set('gender', $gender);
-//            $f3->set('phone', $phone);
-//            $f3->set('premium', $premium);
-//            $f3->set('errors', $errors);
-
             if ($premium == "true") {
                 $member = new PremiumMember($fname, $lname, $age, $gender, $phone);
             } else {
@@ -71,6 +64,7 @@
             }
 
             $f3->set('member', $member);
+            $f3->set('errors', $errors);
 
             $_SESSION['member'] = $member;
 
@@ -93,17 +87,14 @@
 
             include('model/validProfile.php');
 
-            $f3->set('email', $email);
-            $f3->set('state', $state);
-            $f3->set('seeking', $seeking);
-            $f3->set('biography', $biography);
-
             $member = $_SESSION['member'];
             $member->setEmail($email);
             $member->setState($state);
             $member->setSeeking($seeking);
             $member->setBio($biography);
-            $_SESSION['member'] = $member;
+            //$_SESSION['member'] = $member;
+            $f3->set('member', $member);
+            $f3->set('errors', $errors);
 
             if ($success) {
                 if ($member instanceof PremiumMember) {
@@ -124,23 +115,27 @@
 
         if(isset($_POST['submit']))
         {
+            print_r($_FILES); echo "<br>";
+            print_r($_POST); echo "<br>";
+            print_r($_SESSION);echo "<br>";
             //save the user input to the variables
-            $indoorInterests = empty($_POST['indoorInterests']) ? array() : $_POST['indoorInterests'];
-            $outdoorInterests = empty($_POST['outdoorInterests']) ? array() : $_POST['outdoorInterests'];
+            $myIndoorInterests = empty($_POST['indoorInterests']) ? array() : $_POST['indoorInterests'];
+            $myOutdoorInterests = empty($_POST['outdoorInterests']) ? array() : $_POST['outdoorInterests'];
 
             include('model/validInterest.php');
 
-            $f3->set('myIndoorInterests', $indoorInterests);
-            $f3->set('myOutdoorInterests', $outdoorInterests);
-            $f3->set('errors', $errors);
-
             $member = $_SESSION['member'];
-            $member->setInDoorInterests($indoorInterests);
-            $member->setOutDoorInterests($outdoorInterests);
-            $_SESSION['member'] = $member;
+            $member->setInDoorInterests($myIndoorInterests);
+            $member->setOutDoorInterests($myOutdoorInterests);
+            $member->setPhotoPath($target_file);
+
+
+            $f3->set('member', $member);
+            $f3->set('errors', $errors);
+            print_r($member->getIndoorInterests()); echo "<br>";
 
             if ($success) {
-                $f3->reroute('/signUp/summary');
+                //$f3->reroute('/signUp/summary');
             }
         }
         echo Template::instance() -> render('views/interests.html');

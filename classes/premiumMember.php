@@ -15,6 +15,7 @@ class PremiumMember extends Member
 {
     private $_inDoorInterests;
     private $_outDoorInterests;
+    private $_photoPath;
 
     /**
      * PremiumMember constructor.
@@ -54,5 +55,21 @@ class PremiumMember extends Member
     public function setOutDoorInterests($outDoorInterests)
     {
         $this->_outDoorInterests = $outDoorInterests;
+    }
+
+    /**
+     * @return String
+     */
+    public function getPhotoPath()
+    {
+        return $this->_photoPath;
+    }
+
+    /**
+     * @param String $photoPath
+     */
+    public function setPhotoPath($photoPath)
+    {
+        $this->_photoPath = $photoPath;
     }
 }

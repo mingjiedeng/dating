@@ -80,7 +80,7 @@ function validImg($uploadFile)
             ($uploadFile["type"] == "image/gif" ||
                 $uploadFile["type"] == "image/jpeg" ||
                 $uploadFile["type"] == "image/png") &&
-            $uploadFile["size"] < 10000
+            $uploadFile["size"] < 500000
     );
 }
 

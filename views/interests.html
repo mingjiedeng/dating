@@ -37,8 +37,8 @@
 
                             <label class="checkbox">
                             <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"
-                                <check if="{{ in_array(@interest, @@SESSION['member']->getIndoorInterests()}}"> selected</check>
-                            > {{ @interest }}
+                                <check if="{{ @member && in_array(@interest, @member->getIndoorInterests())}}"> selected</check>
+                                > {{ @interest }}
                             </label>
                     </div>
                     </repeat>
@@ -55,7 +55,7 @@
 
                             <label class="checkbox">
                                 <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"
-                                    <check if="{{ in_array(@interest, @@SESSION['member']->getOutdoorInterests()}}"> selected</check>
+                                    <check if="{{ @member && in_array(@interest, @member->getOutdoorInterests())}}"> selected</check>
                                 > {{ @interest }}
                             </label>
                         </div>
@@ -66,7 +66,7 @@
 
                 <div class="row px-3 mb-2">
                     <label><strong>Select image to upload</strong></label>
-                    <input type="file" name="fileToUpload">
+                    <input class="form-control" type="file" name="fileToUpload">
                 </div>
 
                 <div class="row">

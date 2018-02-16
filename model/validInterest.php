@@ -10,24 +10,35 @@ include_once 'validate.php';
 
 $errors = array();
 
-if (!validIndoor($indoorInterests)) {
+if (!validIndoor($myIndoorInterests)) {
     $errors['indoor'] = "Please select the valid interests.";
 }
 
-if (!validOutdoor($outdoorInterests)) {
+if (!validOutdoor($myOutdoorInterests)) {
     $errors['outdoor'] = "Please select the valid interests.";
 }
 
-/*
-if (!validImg($_FILES['fileToUpload'])) {
-    $errors['upload'] = "Photo upload failed or file type invalid.";
-} else {
+if ($_FILES['fileToUpload']['error'] != 4) {
+    $target_dir = "images/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
+    if (!validImg($_FILES['fileToUpload'])) {
+        $errors['upload'] = "Photo upload failed or image type invalid.";
+    } else {
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            $errors['upload'] = $errors['upload'] . "Sorry, file already exists. ";
+        } else {
+            if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                $errors['upload'] = "Sorry, there was an error uploading your file.";
+            }
+        }
+    }
 }
 
-$target_dir = "images/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+/*
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
     $errors['upload'] = $errors['upload'] . "Sorry, only JPG, JPEG, PNG & GIF files are allowed. ";
