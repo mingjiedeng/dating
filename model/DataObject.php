@@ -26,10 +26,19 @@ CREATE TABLE IF NOT EXISTS `Members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 */
 
+/**
+ * Class DataObject
+ *
+ * This class represents a common data object
+ */
 abstract class DataObject {
 
     protected $data = array();
 
+    /**
+     * DataObject constructor.
+     * @param $data
+     */
     public function __construct( $data )
     {
         foreach ( $data as $key => $value ) {
@@ -38,6 +47,10 @@ abstract class DataObject {
         }
     }
 
+    /**
+     * DataObject setter using an array
+     * @param $data
+     */
     public function setData( $data )
     {
         foreach ( $data as $key => $value ) {
@@ -46,6 +59,12 @@ abstract class DataObject {
         }
     }
 
+    /**
+     * DataObject getter
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getValue( $field )
     {
         if ( array_key_exists( $field, $this->data ) ) {
@@ -55,11 +74,22 @@ abstract class DataObject {
         }
     }
 
+    /**
+     * DataObject getter with html encoding
+     *
+     * @param $field
+     * @return string
+     */
     public function getValueEncoded( $field )
     {
         return htmlspecialchars( $this->getValue( $field ) );
     }
 
+    /**
+     * Connect to database
+     *
+     * @return PDO
+     */
     protected static function connect()
     {
         try {
@@ -72,6 +102,10 @@ abstract class DataObject {
         return $conn;
     }
 
+    /**
+     * Disconnect database
+     * @param $conn
+     */
     protected static function disconnect( $conn )
     {
         $conn = "";

@@ -48,6 +48,12 @@ class Member extends DataObject
         'interests' => ''
     );
 
+    /**
+     * Save the premium member's data
+     *
+     * @param $indoorInterests
+     * @param $outdoorInterests
+     */
     public function setPremiumData($indoorInterests, $outdoorInterests)
     {
         //Set the interests into data field
@@ -60,6 +66,9 @@ class Member extends DataObject
         $this->saveToDB();
     }
 
+    /**
+     * Save the member's data into database
+     */
     public function saveToDB()
     {
         $this->validData();
@@ -94,7 +103,11 @@ class Member extends DataObject
         }
     }
 
-
+    /**
+     * Get all the members from database order by last name
+     *
+     * @return array An array of Member objects
+     */
     public static function getMembers()
     {
         $dbh = parent::connect();
@@ -115,6 +128,12 @@ class Member extends DataObject
         }
     }
 
+    /**
+     * Get one member's data from database
+     *
+     * @param $id member_id in database
+     * @return Member a Member object
+     */
     public static function getMember($id)
     {
         $dbh = parent::connect();
@@ -137,7 +156,7 @@ class Member extends DataObject
      * Upload and validate the image,
      * and set up the object field
      */
-    function uploadImg()
+    protected function uploadImg()
     {
         //Validate the uploaded image
         if ($_FILES['fileToUpload']['error'] != 4) {
@@ -154,7 +173,10 @@ class Member extends DataObject
         }
     }
 
-    function validData(){
+    /**
+     * Validate and amend the data user input
+     */
+    protected function validData(){
         if (!$this->validName($this->data['fname']))
             $this->data['fname'] = "";
 
@@ -169,28 +191,34 @@ class Member extends DataObject
     }
 
     /**
+     * Validate the name is not empty and alphabet
+     *
      * @param $name
-     * @return bool
+     * @return bool true if validated
      */
-    function validName($name)
+    protected function validName($name)
     {
         return !empty($name) && ctype_alpha($name);
     }
 
     /**
+     * Validate the age is number and larger than 17
+     *
      * @param $age
-     * @return bool
+     * @return bool true if validated
      */
-    function validAge($age)
+    protected function validAge($age)
     {
         return ctype_digit($age) && $age >= 18;
     }
 
     /**
+     * Validate the phone number
+     *
      * @param $phone
-     * @return bool
+     * @return bool true if validated
      */
-    function validPhone($phone)
+    protected function validPhone($phone)
     {
         //Eliminate all the non digit char
         $phone = preg_replace('/[^\d]/', '', $phone);
@@ -199,10 +227,12 @@ class Member extends DataObject
     }
 
     /**
+     * Validate the type of upload file is image type and the size is less than 500Kb
+     *
      * @param $uploadFile
-     * @return bool
+     * @return bool true if validated
      */
-    function validImg($uploadFile)
+    protected function validImg($uploadFile)
     {
         return ($uploadFile["error"] == 0 &&
             ($uploadFile["type"] == "image/gif" ||
