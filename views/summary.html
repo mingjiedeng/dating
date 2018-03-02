@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light mb-3">
-    <a class="navbar-brand" href="/">My Dating Website</a>
+    <a class="navbar-brand" href="{{ @BASE }}">My Dating Website</a>
 </nav>
 
 <div class="container">
@@ -30,7 +30,7 @@
                             <li class="border p-2">Email: {{ @member->getValue('email') }}</li>
                             <li class="border p-2">State: {{ @member->getValue('state') }}</li>
                             <li class="border p-2">Seeking: {{ @member->getValue('seeking') }}</li>
-                            <check if="{{ @member->getValue('premium') == 1 }}">
+                            <check if="{{ @member->getValue('premium') }}">
                                 <li class="border p-2">Interests: {{ @member->getValue('interests') }}</li>
                             </check>
                         </ul>
@@ -39,7 +39,7 @@
                         <div class="row ml-2 mb-2">
                             <div class="col">
                             <img src="
-                            <check if="{{ @member->getValue('premium') == 1 && @member->getValue('image') }}">
+                            <check if="{{ @member->getValue('premium') && @member->getValue('image') }}">
                                 <true>{{ @BASE }}/{{ @member->getValue('image') }}</true>
                                 <false>{{ @BASE }}/images/photo.jpeg</false>
                             </check>

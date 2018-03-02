@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `Members` (
 class Member extends DataObject
 {
     protected $data = array(
+        'member_id' => '',
         'fname' => '',
         'lname' => '',
         'age' => '',
@@ -102,7 +103,7 @@ class Member extends DataObject
                 $members[] = new Member( $row );
             }
             parent::disconnect( $dbh );
-            return array( $members );
+            return $members;
         } catch ( PDOException $e ) {
             parent::disconnect( $dbh );
             die( "Query failed: " . $e->getMessage() );

@@ -62,7 +62,7 @@
             $member->setData($_POST);
             $f3->set('member', $member);
 
-            if ($member->getValue('premium') == '1')
+            if ($member->getValue('premium'))
                 $f3->reroute('/signUp/interests');
             else
                 $f3->reroute('/signUp/summary');
@@ -72,7 +72,7 @@
 
     $f3->route('GET|POST /signUp/interests', function ($f3)
     {
-        if (!$_SESSION['member'] || $_SESSION['member']->getValue('premium') == '0')
+        if (!$_SESSION['member'] || !$_SESSION['member']->getValue('premium'))
             $f3->reroute('/');
 
         if(isset($_POST['submit']))
@@ -107,7 +107,8 @@
 
     $f3->route('GET|POST /admin', function ($f3)
     {
-        $f3->set("members", Member::getMembers());
+        $members = Member::getMembers();
+        $f3->set("members", $members);
 
         echo Template::instance() -> render('views/admin.html');
     });
