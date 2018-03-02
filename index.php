@@ -14,7 +14,6 @@
     require_once 'vendor/autoload.php';
     require_once '/home/mdenggre/config.php';
     include_once 'model/global_var.php';
-    include_once 'model/validate.php';
 
     //session_start() must after requiring autoload.php
     session_start();
@@ -64,8 +63,11 @@
 
             if ($member->getValue('premium'))
                 $f3->reroute('/signUp/interests');
-            else
+            else {
+                //Save the member data into database
+                $member->saveToDB();
                 $f3->reroute('/signUp/summary');
+            }
         }
         echo Template::instance() -> render('views/profile.html');
     });
@@ -100,6 +102,16 @@
             $f3->reroute('/');
 
         $member = $_SESSION['member'];
+
+        $f3->set('member', $member);
+
+        echo Template::instance() -> render('views/summary.html');
+    });
+
+    $f3->route('GET|POST /summary/@id', function ($f3, $params)
+    {
+        $member = Member::getMember($params['id']);
+
         $f3->set('member', $member);
 
         echo Template::instance() -> render('views/summary.html');

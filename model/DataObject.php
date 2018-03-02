@@ -9,9 +9,9 @@
 DROP TABLE IF EXISTS  Members;
 CREATE TABLE IF NOT EXISTS `Members` (
     `member_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `fname` VARCHAR(30) NOT NULL,
-    `lname` VARCHAR(30) NOT NULL,
-    `age` SMALLINT NOT NULL,
+    `fname` VARCHAR(30) NULL,
+    `lname` VARCHAR(30) NULL,
+    `age` SMALLINT NULL,
     `gender` VARCHAR(10) NULL,
     `phone` VARCHAR(20) NULL,
     `email` VARCHAR(50) NULL,

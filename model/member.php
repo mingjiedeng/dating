@@ -9,9 +9,9 @@
 DROP TABLE IF EXISTS  Members;
 CREATE TABLE IF NOT EXISTS `Members` (
     `member_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `fname` VARCHAR(30) NOT NULL,
-    `lname` VARCHAR(30) NOT NULL,
-    `age` SMALLINT NOT NULL,
+    `fname` VARCHAR(30) NULL,
+    `lname` VARCHAR(30) NULL,
+    `age` SMALLINT NULL,
     `gender` VARCHAR(10) NULL,
     `phone` VARCHAR(20) NULL,
     `email` VARCHAR(50) NULL,
@@ -50,8 +50,13 @@ class Member extends DataObject
 
     public function setPremiumData($indoorInterests, $outdoorInterests)
     {
+        //Set the interests into data field
         $this->data['interests'] = implode(', ', $indoorInterests) . ', ' . implode(',', $outdoorInterests);
+
+        //Upload and save the path of image into data field
         $this->uploadImg();
+
+        //Save the member data into database
         $this->saveToDB();
     }
 
@@ -93,7 +98,7 @@ class Member extends DataObject
     public static function getMembers()
     {
         $dbh = parent::connect();
-        $sql = "SELECT * FROM Members ORDER BY 'lname'";
+        $sql = "SELECT * FROM Members ORDER BY lname";
 
         try {
             $statement = $dbh->prepare($sql);
@@ -110,10 +115,10 @@ class Member extends DataObject
         }
     }
 
-    public function getMember($id)
+    public static function getMember($id)
     {
         $dbh = parent::connect();
-        $sql = "select * from Members where id = :id";
+        $sql = "select * from Members where member_id = :id";
 
         try {
             $statement = $dbh->prepare($sql);
@@ -132,35 +137,34 @@ class Member extends DataObject
      * Upload and validate the image,
      * and set up the object field
      */
-    public function uploadImg()
+    function uploadImg()
     {
         //Validate the uploaded image
         if ($_FILES['fileToUpload']['error'] != 4) {
             $target_dir = "images/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            //$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
             //Assign the path of image to object field if validated
-            if (validImg($_FILES['fileToUpload']) && file_exists($target_file)) {
+            if ($this->validImg($_FILES['fileToUpload']) && !file_exists($target_file)) {
                 move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-                $this->data['phone'] = $target_file;
+                $this->data['image'] = $target_file;
             } else {
-                $this->data['phone'] = "";
+                $this->data['image'] = "";
             }
         }
     }
 
-    public function validData(){
-        if (!validName($this->data['fname']))
+    function validData(){
+        if (!$this->validName($this->data['fname']))
             $this->data['fname'] = "";
 
-        if (!validName($this->data['lname']))
+        if (!$this->validName($this->data['lname']))
             $this->data['lname'] = "";
 
-        if (!validAge($this->data['age']))
+        if (!$this->validAge($this->data['age']))
             $this->data['age'] = "";
 
-        if (!validPhone($this->data['phone']))
+        if (!$this->validPhone($this->data['phone']))
             $this->data['phone'] = "";
     }
 

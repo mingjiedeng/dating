@@ -35,14 +35,15 @@
         <repeat group="{{ @members }}" value="{{ @member }}">
         <tr>
             <td>{{ @member->getValue('member_id') }}</td>
-            <td>{{ @member->getValue('fname') }} {{ @member->getValue('lname') }}</td>
+            <td><a href="{{ @BASE }}/summary/{{ @member->getValue('member_id') }}">
+                {{ @member->getValue('fname') }} {{ @member->getValue('lname') }}</a></td>
             <td>{{ @member->getValue('age') }}</td>
             <td>{{ @member->getValue('phone') }}</td>
             <td>{{ @member->getValue('email') }}</td>
             <td>{{ @member->getValue('state') }}</td>
             <td>{{ @member->getValue('gender') }}</td>
             <td>{{ @member->getValue('seeking') }}</td>
-            <td><input type="checkbox" disabled="disabled" <check if="{{ @member->getValue('premium') }}">checked</check>></td>
+            <td><input type="checkbox" <check if="{{ @member->getValue('premium') }}">checked</check>></td>
             <td>{{ @member->getValue('interests') }}</td>
         </tr>
         </repeat>
