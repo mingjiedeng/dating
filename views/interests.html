@@ -36,7 +36,7 @@
                     <div class="col-md-3">
                             <label class="checkbox">
                             <input type="checkbox" name="indoorInterests[]" value="{{ @interest }}"
-                                <check if="{{ @member && in_array(@interest, @member->getIndoorInterests())}}"> checked</check>
+                                <check if="{{ @member && in_array(@interest, @myIndoorInterests)}}"> checked</check>
                                 > {{ @interest }}
                             </label>
                     </div>
@@ -54,7 +54,7 @@
 
                             <label class="checkbox">
                                 <input type="checkbox" name="outdoorInterests[]" value="{{ @interest }}"
-                                    <check if="{{ @member && in_array(@interest, @member->getOutdoorInterests())}}"> checked</check>
+                                    <check if="{{ @member && in_array(@interest, @myOutdoorInterests)}}"> checked</check>
                                 > {{ @interest }}
                             </label>
                         </div>

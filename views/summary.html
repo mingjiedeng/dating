@@ -23,18 +23,15 @@
                     <div class="col-md-6">
                         <ul class="list-unstyled border rounded">
                             <li class="border p-2">Name:
-                                {{ @SESSION['member']->getfname() }} {{ @SESSION['member']->getlname() }}</li>
-                            <li class="border p-2">Gender: {{ @SESSION['member']->getGender() }}</li>
-                            <li class="border p-2">Age: {{ @SESSION['member']->getAge() }}</li>
-                            <li class="border p-2">Phone: {{ @SESSION['member']->getPhone() }}</li>
-                            <li class="border p-2">Email: {{ @SESSION['member']->getEmail() }}</li>
-                            <li class="border p-2">State: {{ @SESSION['member']->getState() }}</li>
-                            <li class="border p-2">Seeking: {{ @SESSION['member']->getSeeking() }}
-                            <check if="{{ @premium == 'true' }}">
-                            <li class="border p-2">Interests:
-                                <repeat group="{{ @SESSION['member']->getIndoorInterests() }}" value="{{ @interest }}">{{ @interest }} </repeat>
-                                <repeat group="{{ @SESSION['member']->getOutdoorInterests() }}" value="{{ @interest }}">{{ @interest }} </repeat>
-                            </li>
+                                {{ @member->getValue('fname') }} {{ @member->getValue('lname') }}</li>
+                            <li class="border p-2">Gender: {{ @member->getValue('gender') }}</li>
+                            <li class="border p-2">Age: {{ @member->getValue('age') }}</li>
+                            <li class="border p-2">Phone: {{ @member->getValue('phone') }}</li>
+                            <li class="border p-2">Email: {{ @member->getValue('email') }}</li>
+                            <li class="border p-2">State: {{ @member->getValue('state') }}</li>
+                            <li class="border p-2">Seeking: {{ @member->getValue('seeking') }}</li>
+                            <check if="{{ @member->getValue('premium') == 1 }}">
+                                <li class="border p-2">Interests: {{ @member->getValue('interests') }}</li>
                             </check>
                         </ul>
                     </div>
@@ -42,8 +39,8 @@
                         <div class="row ml-2 mb-2">
                             <div class="col">
                             <img src="
-                            <check if="{{ @premium == 'true' && @SESSION['member']->getPhotoPath() }}">
-                                <true>{{ @BASE }}/{{ @SESSION['member']->getPhotoPath() }}</true>
+                            <check if="{{ @member->getValue('premium') == 1 && @member->getValue('image') }}">
+                                <true>{{ @BASE }}/{{ @member->getValue('image') }}</true>
                                 <false>{{ @BASE }}/images/photo.jpeg</false>
                             </check>
                             " class="rounded img-fluid" alt="dating">
@@ -53,7 +50,7 @@
                             <h5>Biography</h5>
                         </div>
                         <div class="row px-2">
-                            <p class="text-center">{{ @biography }}</p>
+                            <p class="text-center">{{ @member->getValue('bio') }}</p>
                         </div>
                     </div>
                 </div>

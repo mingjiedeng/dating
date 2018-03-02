@@ -23,7 +23,7 @@ function validName($name)
  */
 function validAge($age)
 {
-    return ctype_digit($age) && $age >= 18;
+    return ctype_digit($age) && $age > 0;
 }
 
 /**
@@ -82,5 +82,59 @@ function validImg($uploadFile)
                 $uploadFile["type"] == "image/png") &&
             $uploadFile["size"] < 500000
     );
+}
+
+function validPersonal($fname, $lname, $age, $phone)
+{
+    $errors = array();
+
+    if (!(validName($fname) && validName($lname))) {
+        $errors['name'] = "Please enter a valid name.";
+    }
+
+    if (!validAge($age)) {
+        $errors['age'] = "Please enter a valid age.";
+    }
+
+    if (!validPhone($phone)) {
+        $errors['phone'] = "Please enter a valid phone.";
+    }
+
+    //$success = true;
+    return $errors;
+}
+
+function validInterest($myIndoorInterests, $myOutdoorInterests)
+{
+    $errors = array();
+
+    if (!validIndoor($myIndoorInterests)) {
+        $errors['indoor'] = "Please select the valid interests.";
+    }
+
+    if (!validOutdoor($myOutdoorInterests)) {
+        $errors['outdoor'] = "Please select the valid interests.";
+    }
+
+    if ($_FILES['fileToUpload']['error'] != 4) {
+        $target_dir = "images/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        if (!validImg($_FILES['fileToUpload'])) {
+            $errors['upload'] = "Photo upload failed or image type invalid.";
+        } else {
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                $errors['upload'] = $errors['upload'] . "Sorry, file already exists. ";
+            } else {
+                if (!move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    $errors['upload'] = "Sorry, there was an error uploading your file.";
+                }
+            }
+        }
+    }
+
+    return $errors;
 }
 

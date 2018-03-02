@@ -31,7 +31,7 @@
                         <div class="form-row mb-3">
                             <label for="email"><strong>Email</strong></label>
                             <input type="text" class="form-control" id="email" name="email"
-                                   value="<check if="{{ @member }}">{{ @member->getEmail() }}</check>" placeholder="Email">
+                                   value="<check if="{{ @member }}">{{ @member->getValue('email') }}</check>" placeholder="Email">
                         </div>
                         <div class="form-row mb-3">
                             <label><strong>State</strong></label>
@@ -39,7 +39,7 @@
                                 <option value="">-- Select --</option>
                                 <repeat group="{{@states}}" value="{{@stateOption}}">
                                     <option value="{{@stateOption}}"
-                                    <check if="{{@member && @stateOption == @member->getState()}}"> selected</check>>
+                                    <check if="{{@member && @stateOption == @member->getValue('state')}}"> selected</check>>
                                     {{@stateOption}}
                                     </option>
                                 </repeat>
@@ -50,12 +50,12 @@
                             <div>
                                 <label class="radio-inline">
                                     <input type="radio" name="seeking" id="male" value="Male"
-                                        <check if="{{ @member && @member->getSeeking() == 'Male' }}"> checked</check>
+                                        <check if="{{ @member && @member->getValue('seeking') == 'Male' }}"> checked</check>
                                     > Male
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="seeking" id="female" value="Female"
-                                        <check if="{{ @member && @member->getSeeking() == 'Female' }}"> checked</check>
+                                        <check if="{{ @member && @member->getValue('seeking') == 'Female' }}"> checked</check>
                                     > Female
                                 </label>
                             </div>
@@ -63,9 +63,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-row ml-3">
-                            <label for="biography"><strong>Biography</strong></label>
-                            <textarea class="form-control" id="biography" name="biography" rows="6">
-                                <check if="{{ @member }}">{{ @member->getBiography() }}</check>
+                            <label for="bio"><strong>Biography</strong></label>
+                            <textarea class="form-control" id="bio" name="bio" rows="6">
+                                <check if="{{ @member }}">{{ @member->getValue('bio') }}</check>
                             </textarea>
                         </div>
                     </div>
