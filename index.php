@@ -11,7 +11,10 @@
     ini_set("display_errors",TRUE);
 
     //Require the autoload file
-    require_once('vendor/autoload.php');
+    require_once 'vendor/autoload.php';
+    require_once '/home/mdenggre/config.php';
+    include_once 'model/global_var.php';
+    include_once 'model/validate.php';
 
     //session_start() must after requiring autoload.php
     session_start();
@@ -22,55 +25,28 @@
     //Set devug level
     $f3->set('DEBUG', 3); //3 is higher than 0, will present more info
 
-    $f3->set('states', array('Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-        'Colorado', 'Connecticut', 'Delaware', 'District Of Columbia', 'Florida', 'Georgia',
-        'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-        'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-        'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-        'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'));
-
-    $f3->set('indoorInterests', array('tv', 'movies', 'cooking', 'board games', 'puzzles',
-        'reading', 'playing cards', 'video games'));
-
-    $f3->set('outdoorInterests', array('hiking', 'biking', 'swimming', 'collecting', 'walking',
-        'climbing'));
+    $f3->set('states', $states);
+    $f3->set('indoorInterests', $indoorInterests);
+    $f3->set('outdoorInterests', $outdoorInterests);
 
     //Define a default route
     $f3->route('GET /', function() {
-        $view = new View;
-        echo $view->render
-        ('views/home.html');
+        echo Template::instance() -> render('views/home.html');
     });
 
     $f3->route('GET|POST /signUp/personalInfo', function ($f3)
     {
         if (isset($_POST['submit'])) {
-            //save the user input to the variables
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
-            $age = $_POST['age'];
-            $gender = $_POST['gender'];
-            $phone = $_POST['phone'];
-            $premium = $_POST['premium'];
+            //Create an object
+            $member = new Member($_POST);
 
-            include('model/validPersonal.php');
-
-            if ($premium == "true") {
-                $member = new PremiumMember($fname, $lname, $age, $gender, $phone);
-            } else {
-                $member = new Member($fname, $lname, $age, $gender, $phone);
-            }
-
+            //Set f3 variables
             $f3->set('member', $member);
-            $f3->set('errors', $errors);
 
+            //Save member object into session
             $_SESSION['member'] = $member;
 
-            if ($success) {
-                $f3->reroute('/signUp/profile');
-            }
+            $f3->reroute('/signUp/profile');
         }
         echo Template::instance() -> render('views/personalInfo.html');
     });
@@ -79,39 +55,25 @@
     {
         if(isset($_POST['submit']))
         {
-            //save the user input to the variables
-            $email = $_POST['email'];
-            $state = $_POST['state'];
-            $seeking = $_POST['seeking'];
-            $biography = $_POST['biography'];
-
-            include('model/validProfile.php');
+            if (!$_SESSION['member'])
+                $f3->reroute('/');
 
             $member = $_SESSION['member'];
-            $member->setEmail($email);
-            $member->setState($state);
-            $member->setSeeking($seeking);
-            $member->setBio($biography);
-            //$_SESSION['member'] = $member;
+            $member->setData($_POST);
             $f3->set('member', $member);
-            $f3->set('errors', $errors);
 
-            if ($success) {
-                if ($member instanceof PremiumMember) {
-                    $f3->reroute('/signUp/interests');
-                } else {
-                    $f3->reroute('/signUp/summary');
-                }
-            }
+            if ($member->getValue('premium') == '1')
+                $f3->reroute('/signUp/interests');
+            else
+                $f3->reroute('/signUp/summary');
         }
         echo Template::instance() -> render('views/profile.html');
     });
 
     $f3->route('GET|POST /signUp/interests', function ($f3)
     {
-        if (!($_SESSION['member'] instanceof PremiumMember)) {
+        if (!$_SESSION['member'] || $_SESSION['member']->getValue('premium') == '0')
             $f3->reroute('/');
-        }
 
         if(isset($_POST['submit']))
         {
@@ -119,44 +81,35 @@
             $myIndoorInterests = empty($_POST['indoorInterests']) ? array() : $_POST['indoorInterests'];
             $myOutdoorInterests = empty($_POST['outdoorInterests']) ? array() : $_POST['outdoorInterests'];
 
-            include('model/validInterest.php');
-
             $member = $_SESSION['member'];
-            $member->setInDoorInterests($myIndoorInterests);
-            $member->setOutDoorInterests($myOutdoorInterests);
-            $member->setPhotoPath($target_file);
+            $member->setPremiumData($myIndoorInterests, $myOutdoorInterests);
 
 
+            $f3->set('myIndoorInterests', $myIndoorInterests);
+            $f3->set('myOutdoorInterests', $myIndoorInterests);
             $f3->set('member', $member);
-            $f3->set('errors', $errors);
 
-            if ($success) {
-                $f3->reroute('/signUp/summary');
-            }
+            $f3->reroute('/signUp/summary');
         }
         echo Template::instance() -> render('views/interests.html');
     });
 
     $f3->route('GET|POST /signUp/summary', function ($f3)
     {
+        if (!$_SESSION['member'])
+            $f3->reroute('/');
+
         $member = $_SESSION['member'];
         $f3->set('member', $member);
-        $name = $member->getFname() . " " . $member->getLname();
-        $f3->set('name', $name);
-        $f3->set('age', $member->getAge());
-        $f3->set('gender', $member->getGender());
-        $f3->set('phone', $member->getPhone());
-        $f3->set('email', $member->getEmail());
-        $f3->set('state', $member->getState());
-        $f3->set('seeking', $member->getSeeking());
-        $f3->set('biography', $member->getBio());
-        if ($member instanceof PremiumMember) {
-            $f3->set('premium', 'true');
-            $f3->set('indoorInterests', $member->getInDoorInterests());
-            $f3->set('outdoorInterests', $member->getOutDoorInterests());
-        }
 
         echo Template::instance() -> render('views/summary.html');
+    });
+
+    $f3->route('GET|POST /admin', function ($f3)
+    {
+        $f3->set("members", Member::getMembers());
+
+        echo Template::instance() -> render('views/admin.html');
     });
 
     //Run fat free
